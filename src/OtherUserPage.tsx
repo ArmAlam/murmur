@@ -52,13 +52,13 @@ export default function OtherUserPage() {
 
   return (
     <div style={{ maxWidth: '600px', margin: '40px auto' }}>
-      <h2>{user.name}'s Profile</h2>
+      <h2>{user.user.name}'s Profile</h2>
       <p>
-        Following: {user.followCount} · Followers: {user.followedCount}
+        Following: {user.user.followCount} · Followers: {user.followedCount}
       </p>
 
       <button
-        onClick={user.isFollowed ? handleUnfollow : handleFollow}
+        onClick={user.user.isFollowed ? handleUnfollow : handleFollow}
         style={{
           marginBottom: '20px',
           padding: '6px 12px',
@@ -69,7 +69,7 @@ export default function OtherUserPage() {
           cursor: 'pointer',
         }}
       >
-        {user.isFollowed ? 'Unfollow' : 'Follow'}
+        {user.user.isFollowed ? 'Unfollow' : 'Follow'}
       </button>
 
       <h3>Their Murmurs</h3>
