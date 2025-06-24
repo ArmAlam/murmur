@@ -9,43 +9,34 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.User = void 0;
+exports.Murmur = void 0;
 const typeorm_1 = require("typeorm");
-const murmur_entity_1 = require("./murmur.entity");
+const user_entity_1 = require("./user.entity");
 const like_entity_1 = require("./like.entity");
-const follow_entity_1 = require("./follow.entity");
-let User = class User {
+let Murmur = class Murmur {
 };
-exports.User = User;
+exports.Murmur = Murmur;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], User.prototype, "id", void 0);
+], Murmur.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)('text'),
     __metadata("design:type", String)
-], User.prototype, "name", void 0);
+], Murmur.prototype, "content", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)
-], User.prototype, "createdAt", void 0);
+], Murmur.prototype, "createdAt", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => murmur_entity_1.Murmur, murmur => murmur.user),
-    __metadata("design:type", Array)
-], User.prototype, "murmurs", void 0);
+    (0, typeorm_1.ManyToOne)(() => user_entity_1.User, user => user.murmurs, { eager: true }),
+    __metadata("design:type", user_entity_1.User)
+], Murmur.prototype, "user", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => like_entity_1.Like, like => like.user),
+    (0, typeorm_1.OneToMany)(() => like_entity_1.Like, like => like.murmur),
     __metadata("design:type", Array)
-], User.prototype, "likes", void 0);
-__decorate([
-    (0, typeorm_1.OneToMany)(() => follow_entity_1.Follow, follow => follow.follower),
-    __metadata("design:type", Array)
-], User.prototype, "following", void 0);
-__decorate([
-    (0, typeorm_1.OneToMany)(() => follow_entity_1.Follow, follow => follow.following),
-    __metadata("design:type", Array)
-], User.prototype, "followers", void 0);
-exports.User = User = __decorate([
-    (0, typeorm_1.Entity)('users')
-], User);
-//# sourceMappingURL=user.entity.js.map
+], Murmur.prototype, "likes", void 0);
+exports.Murmur = Murmur = __decorate([
+    (0, typeorm_1.Entity)('murmurs')
+], Murmur);
+//# sourceMappingURL=murmur.entity.js.map
