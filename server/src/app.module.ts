@@ -3,9 +3,18 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { User } from './entities/user.entity';
+import { Murmur } from './entities/murmur.entity';
+import { Like } from './entities/like.entity';
+import { Follow } from './entities/follow.entity';
+import { MurmurModule } from './murmur/murmur.module';
+import { LikeModule } from './like/like.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
+    MurmurModule,
+    LikeModule,
+    UserModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
@@ -13,10 +22,10 @@ import { User } from './entities/user.entity';
       username: 'docker',
       password: 'docker',
       database: 'test',
-      entities: [User],
+      entities: [User, Murmur, Like, Follow],
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, Murmur]),
   ],
   controllers: [AppController],
   providers: [AppService],
