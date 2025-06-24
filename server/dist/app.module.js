@@ -12,6 +12,9 @@ const typeorm_1 = require("@nestjs/typeorm");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const user_entity_1 = require("./entities/user.entity");
+const murmur_entity_1 = require("./entities/murmur.entity");
+const like_entity_1 = require("./entities/like.entity");
+const follow_entity_1 = require("./entities/follow.entity");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -25,7 +28,7 @@ exports.AppModule = AppModule = __decorate([
                 username: 'docker',
                 password: 'docker',
                 database: 'test',
-                entities: [user_entity_1.User],
+                entities: [user_entity_1.User, murmur_entity_1.Murmur, like_entity_1.Like, follow_entity_1.Follow],
                 synchronize: true,
             }),
             typeorm_1.TypeOrmModule.forFeature([user_entity_1.User]),
