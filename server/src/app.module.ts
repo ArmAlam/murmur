@@ -24,6 +24,7 @@ import { UserModule } from './user/user.module';
       database: 'test',
       entities: [User, Murmur, Like, Follow],
       synchronize: true,
+      autoLoadEntities: true,
     }),
     TypeOrmModule.forFeature([User, Murmur]),
   ],
