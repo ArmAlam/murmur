@@ -16,6 +16,22 @@ function App() {
   const [page, setPage] = useState(1)
   const [loading, setLoading] = useState(false)
 
+  const [newMurmur, setNewMurmur] = useState('')
+
+  const postMurmur = async () => {
+    if (!newMurmur.trim()) return
+    try {
+      await axios.post('/api/me/murmurs', {
+        userId: USER_ID,
+        content: newMurmur,
+      })
+      setNewMurmur('')
+      fetchTimeline() // refresh after posting
+    } catch (err) {
+      console.error('Failed to post murmur:', err)
+    }
+  }
+
   const fetchTimeline = async () => {
     setLoading(true)
     try {
@@ -59,45 +75,78 @@ function App() {
       ) : murmurs.length === 0 ? (
         <p style={{ textAlign: 'center' }}>No murmurs found.</p>
       ) : (
-        <ul style={{ listStyle: 'none', padding: 0 }}>
-          {murmurs.map((murmur) => (
-            <li
-              key={murmur.id}
+        <>
+          <div style={{ marginBottom: '30px' }}>
+            <textarea
+              value={newMurmur}
+              onChange={(e) => setNewMurmur(e.target.value)}
+              rows={3}
+              placeholder="What's on your mind?"
               style={{
+                width: '100%',
+                padding: '10px',
+                fontSize: '14px',
+                borderRadius: '6px',
                 border: '1px solid #ccc',
-                borderRadius: '10px',
-                padding: '15px',
-                marginBottom: '15px',
-                boxShadow: '2px 2px 6px rgba(0,0,0,0.05)',
+                resize: 'none',
+              }}
+            />
+            <button
+              onClick={postMurmur}
+              style={{
+                marginTop: '10px',
+                padding: '8px 16px',
+                backgroundColor: '#28a745',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '5px',
+                cursor: 'pointer',
               }}
             >
-              <p style={{ marginBottom: '8px' }}>
-                <strong>{murmur.user.name}</strong>
-              </p>
-              <p style={{ marginBottom: '10px' }}>{murmur.content}</p>
-              <p style={{ fontSize: '14px', color: '#666' }}>
-                {new Date(murmur.createdAt).toLocaleString()} ·{' '}
-                {murmur.likes.length}{' '}
-                {murmur.likes.length === 1 ? 'like' : 'likes'}
-              </p>
-              <button
-                onClick={() => handleLike(murmur.id)}
+              Post Murmur
+            </button>
+          </div>
+
+          <ul style={{ listStyle: 'none', padding: 0 }}>
+            {murmurs.map((murmur) => (
+              <li
+                key={murmur.id}
                 style={{
-                  padding: '6px 12px',
-                  fontSize: '14px',
-                  borderRadius: '5px',
-                  border: 'none',
-                  backgroundColor: '#007bff',
-                  color: '#fff',
-                  cursor: 'pointer',
-                  marginTop: '8px',
+                  border: '1px solid #ccc',
+                  borderRadius: '10px',
+                  padding: '15px',
+                  marginBottom: '15px',
+                  boxShadow: '2px 2px 6px rgba(0,0,0,0.05)',
                 }}
               >
-                Like
-              </button>
-            </li>
-          ))}
-        </ul>
+                <p style={{ marginBottom: '8px' }}>
+                  <strong>{murmur.user.name}</strong>
+                </p>
+                <p style={{ marginBottom: '10px' }}>{murmur.content}</p>
+                <p style={{ fontSize: '14px', color: '#666' }}>
+                  {new Date(murmur.createdAt).toLocaleString()} ·{' '}
+                  {murmur.likes.length}{' '}
+                  {murmur.likes.length === 1 ? 'like' : 'likes'}
+                </p>
+                <button
+                  onClick={() => handleLike(murmur.id)}
+                  style={{
+                    padding: '6px 12px',
+                    fontSize: '14px',
+                    borderRadius: '5px',
+                    border: 'none',
+                    backgroundColor: '#007bff',
+                    color: '#fff',
+                    cursor: 'pointer',
+                    marginTop: '8px',
+                  }}
+                >
+                  Like
+                </button>
+              </li>
+            ))}
+          </ul>
+        </>
       )}
 
       <div style={{ textAlign: 'center', marginTop: '30px' }}>
