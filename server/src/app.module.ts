@@ -6,9 +6,11 @@ import { User } from './entities/user.entity';
 import { Murmur } from './entities/murmur.entity';
 import { Like } from './entities/like.entity';
 import { Follow } from './entities/follow.entity';
+import { MurmurModule } from './murmur/murmur.module';
 
 @Module({
   imports: [
+    MurmurModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
@@ -19,7 +21,7 @@ import { Follow } from './entities/follow.entity';
       entities: [User, Murmur, Like, Follow],
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, Murmur]),
   ],
   controllers: [AppController],
   providers: [AppService],

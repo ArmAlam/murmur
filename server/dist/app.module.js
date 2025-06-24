@@ -15,12 +15,14 @@ const user_entity_1 = require("./entities/user.entity");
 const murmur_entity_1 = require("./entities/murmur.entity");
 const like_entity_1 = require("./entities/like.entity");
 const follow_entity_1 = require("./entities/follow.entity");
+const murmur_module_1 = require("./murmur/murmur.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            murmur_module_1.MurmurModule,
             typeorm_1.TypeOrmModule.forRoot({
                 type: 'mysql',
                 host: 'localhost',
@@ -31,7 +33,7 @@ exports.AppModule = AppModule = __decorate([
                 entities: [user_entity_1.User, murmur_entity_1.Murmur, like_entity_1.Like, follow_entity_1.Follow],
                 synchronize: true,
             }),
-            typeorm_1.TypeOrmModule.forFeature([user_entity_1.User]),
+            typeorm_1.TypeOrmModule.forFeature([user_entity_1.User, murmur_entity_1.Murmur]),
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
