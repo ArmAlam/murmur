@@ -36,6 +36,7 @@ exports.AppModule = AppModule = __decorate([
                 database: 'test',
                 entities: [user_entity_1.User, murmur_entity_1.Murmur, like_entity_1.Like, follow_entity_1.Follow],
                 synchronize: true,
+                autoLoadEntities: true,
             }),
             typeorm_1.TypeOrmModule.forFeature([user_entity_1.User, murmur_entity_1.Murmur]),
         ],

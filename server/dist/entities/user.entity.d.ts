@@ -4,6 +4,7 @@ import { Follow } from './follow.entity';
 export declare class User {
     id: number;
     name: string;
+    email: string;
     createdAt: Date;
     murmurs: Murmur[];
     likes: Like[];

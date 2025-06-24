@@ -1,29 +1,21 @@
-import { useState, useEffect } from 'react'
-import axios from 'axios'
+import { Routes, Route, Link } from 'react-router-dom';
+import TimelinePage from './TimelinePage';
+import OwnUserPage from './OwnUserPage';
+import OtherUserPage from './OtherUserPage';
 
-function App() {
-  const [data, setData] = useState<any>(null)
-  
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.post('/api/postTest')
-        console.log(res.data)
-        setData(res.data)
-      } catch (error) {
-        console.error('Error fetching data:', error)
-      }
-    }
-    
-    fetchData()
-  }, [])
-
+export default function App() {
   return (
-    <div>
-      <h1>Display the data obtained from API here</h1>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
-    </div>
-  )
-}
+    <div style={{ fontFamily: 'sans-serif', padding: '20px' }}>
+      <nav style={{ marginBottom: '30px' }}>
+        <Link to="/" style={{ marginRight: '20px' }}>Timeline</Link>
+        <Link to="/me">My Profile</Link>
+      </nav>
 
-export default App
+      <Routes>
+        <Route path="/" element={<TimelinePage />} />
+        <Route path="/me" element={<OwnUserPage />} />
+        <Route path="/users/:id" element={<OtherUserPage />} />
+      </Routes>
+    </div>
+  );
+}
