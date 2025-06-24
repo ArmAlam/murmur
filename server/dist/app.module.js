@@ -17,6 +17,7 @@ const like_entity_1 = require("./entities/like.entity");
 const follow_entity_1 = require("./entities/follow.entity");
 const murmur_module_1 = require("./murmur/murmur.module");
 const like_module_1 = require("./like/like.module");
+const user_module_1 = require("./user/user.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -25,6 +26,7 @@ exports.AppModule = AppModule = __decorate([
         imports: [
             murmur_module_1.MurmurModule,
             like_module_1.LikeModule,
+            user_module_1.UserModule,
             typeorm_1.TypeOrmModule.forRoot({
                 type: 'mysql',
                 host: 'localhost',

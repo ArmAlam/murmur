@@ -8,11 +8,13 @@ import { Like } from './entities/like.entity';
 import { Follow } from './entities/follow.entity';
 import { MurmurModule } from './murmur/murmur.module';
 import { LikeModule } from './like/like.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
     MurmurModule,
     LikeModule,
+    UserModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
