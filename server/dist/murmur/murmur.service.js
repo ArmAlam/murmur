@@ -26,43 +26,46 @@ let MurmurService = class MurmurService {
     async createMurmur(userId, content) {
         const user = await this.userRepo.findOneBy({ id: userId });
         if (!user)
-            throw new common_1.NotFoundException('User not found');
+            throw new common_1.NotFoundException("User not found");
         const murmur = this.murmurRepo.create({ user, content });
         return this.murmurRepo.save(murmur);
     }
     async deleteMurmur(murmurId, userId) {
         const murmur = await this.murmurRepo.findOne({
             where: { id: murmurId },
-            relations: ['user'],
+            relations: ["user"],
         });
         if (!murmur || murmur.user.id !== userId) {
-            throw new common_1.NotFoundException('Murmur not found or not owned by user');
+            throw new common_1.NotFoundException("Murmur not found or not owned by user");
         }
         return this.murmurRepo.remove(murmur);
     }
     async getTimeline(userId, page = 1, limit = 10) {
         const offset = (page - 1) * limit;
         const followed = await this.userRepo
-            .createQueryBuilder('user')
-            .leftJoinAndSelect('user.following', 'follow')
-            .where('user.id = :id', { id: userId })
+            .createQueryBuilder("user")
+            .leftJoinAndSelect("user.following", "follow")
+            .where("user.id = :id", { id: userId })
             .getOne();
-        const ids = followed.following.map(f => f.followingId).concat(userId);
+        if (!followed) {
+            throw new common_1.NotFoundException(`User with ID ${userId} not found`);
+        }
+        const ids = followed.following.map((f) => f.followingId).concat(userId);
         return this.murmurRepo.find({
             where: { user: { id: (0, typeorm_2.In)(ids) } },
-            order: { createdAt: 'DESC' },
+            order: { createdAt: "DESC" },
             skip: offset,
             take: limit,
-            relations: ['user', 'likes'],
+            relations: ["user", "likes"],
         });
     }
     async getMurmurDetail(id) {
         const murmur = await this.murmurRepo.findOne({
             where: { id },
-            relations: ['user', 'likes'],
+            relations: ["user", "likes"],
         });
         if (!murmur)
-            throw new common_1.NotFoundException('Murmur not found');
+            throw new common_1.NotFoundException("Murmur not found");
         return murmur;
     }
 };

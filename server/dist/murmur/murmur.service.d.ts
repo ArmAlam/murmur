@@ -1,6 +1,6 @@
-import { Repository } from 'typeorm';
-import { Murmur } from '../entities/murmur.entity';
-import { User } from '../entities/user.entity';
+import { Repository } from "typeorm";
+import { Murmur } from "../entities/murmur.entity";
+import { User } from "../entities/user.entity";
 export declare class MurmurService {
     private murmurRepo;
     private userRepo;
